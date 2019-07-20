@@ -1,0 +1,7 @@
+com\itcast\domain\Permission.class
+com\itcast\domain\Product.class
+com\itcast\domain\UserInfo.class
+com\itcast\domain\Member.class
+com\itcast\domain\Traveller.class
+com\itcast\domain\Orders.class
+com\itcast\domain\Role.class
