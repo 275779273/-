@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!--配置不拦截的路径-->
+    <http security="none" pattern="/pages/login.jsp"/>
+    <http security="none" pattern="/pages/failer.jsp"/>
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/img/**" security="none"/>
+    <http pattern="/plugins/**" security="none"/>
+    <!--授权
+        security="none" : 关闭spel表达式
+    -->
+    <http use-expressions="false">
+        <!--设置拦截路径 , 访问权限-->
+        <intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN,ROLE_vip,ROLE_ceo"/>
+        <!--登录页面-->
+        <form-login login-page="/pages/login.jsp"
+                    login-processing-url="/login.do"
+                    authentication-success-forward-url="/pages/main.jsp"
+                    authentication-failure-forward-url="/pages/failer.jsp"
+        />
+        <!--退出页面
+            logout-url="logout.do" : 退出请求发送的路径 ,
+            logout-success-url="/pages/login.jsp" : 退出成功后跳转到的也面
+        -->
+        <logout invalidate-session="true" logout-url="/logout.do" logout-success-url="/pages/login.jsp"/>
+        <!--关闭跨域请求 ,  默认为false(开启)-->
+        <csrf disabled="true"/>
+    </http>
+
+    <!--认证
+        user-service-ref : 要调用的Service层的接口名
+    -->
+    <authentication-manager>
+        <authentication-provider user-service-ref="userService">
+
+        </authentication-provider>
+    </authentication-manager>
+
+    <!--密码加密器-->
+    <beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+</beans:beans>
