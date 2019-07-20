@@ -1,0 +1,7 @@
+com\itcast\controller\RoleController.class
+com\itcast\controller\PermissionController.class
+com\itcast\controller\LogAopController.class
+com\itcast\controller\ProductController.class
+com\itcast\controller\SysLogController.class
+com\itcast\controller\OrdersController.class
+com\itcast\controller\UserController.class
